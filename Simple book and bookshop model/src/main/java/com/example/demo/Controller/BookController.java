@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 import com.example.demo.Entity.Book;
 
+import com.example.demo.Entity.BookShop;
 import com.example.demo.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 public class BookController {
 
@@ -35,16 +36,16 @@ public class BookController {
     public ResponseEntity<List<Book> > getAllBooks(){
         return bookService.getAllBooks();
     }
-    @GetMapping("/api/books/{id}")
+    @GetMapping("/api/booksget/{id}")
     public Book getbookByid(@PathVariable long id){
         return bookService.getbookByid(id);
     }
-    @PutMapping("/api/books/{id}")
+    @PutMapping("/api/booksput/{id}")
     public ResponseEntity <Book> updateBook(@RequestBody Book book,@PathVariable long id)
     {
         return bookService.updateBook(book,id);
     }
-    @DeleteMapping("/api/books/{id}")
+    @DeleteMapping("/api/booksdelete/{id}")
     public ResponseEntity<Book> deleteBook(@PathVariable long id)
     {
         return bookService.deleteBook(id);
@@ -55,5 +56,7 @@ public class BookController {
     {
         return bookService.deleteAllbooks();
     }
+
+
 
 }

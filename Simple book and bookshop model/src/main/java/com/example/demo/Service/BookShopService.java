@@ -1,6 +1,8 @@
 package com.example.demo.Service;
 
+import com.example.demo.Entity.Book;
 import com.example.demo.Entity.BookShop;
+import com.example.demo.Repository.BookRepository;
 import com.example.demo.Repository.BookShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,8 @@ import java.util.List;
 public class BookShopService {
     @Autowired
     private BookShopRepository bookShopRepository;
+    @Autowired
+    BookRepository bookRepository;
     public ResponseEntity<BookShop> addBookShop( BookShop bookShop){
         BookShop newBookShop=bookShopRepository.save(bookShop);
         return new ResponseEntity<>(newBookShop, HttpStatus.CREATED);
@@ -31,9 +35,9 @@ public class BookShopService {
         return bookShopRepository.findByTitle(title);
     }
 
-    public ResponseEntity <BookShop> updateBookShop(BookShop bookShop)
+    public ResponseEntity <BookShop> updateBookShop(BookShop bookShop,int id)
     {
-        BookShop updatedBookShop=bookShopRepository.findById(bookShop.getShop_no()).orElse(null);
+        BookShop updatedBookShop=bookShopRepository.findById(id).orElse(null);
         updatedBookShop.setLocation(bookShop.getLocation());
         updatedBookShop.setEmail(bookShop.getEmail());
         updatedBookShop.setContact_no(bookShop.getContact_no());
@@ -48,5 +52,17 @@ public class BookShopService {
         if(deletedBookShop==null)   return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         bookShopRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<BookShop> assignAll(long bookId, int shopId) {
+        Book book=bookRepository.findById(bookId).get();
+        System.out.println(book);
+        BookShop bookShop=bookShopRepository.findById(shopId).get();
+        System.out.println(bookShop);
+        //bookShop.getBooks().add(book);
+        book.setBookshop(bookShop);
+        Book savedbook=bookRepository.save(book);
+        System.out.println(savedbook);
+        return new ResponseEntity<>(bookShop,HttpStatus.OK);
     }
 }

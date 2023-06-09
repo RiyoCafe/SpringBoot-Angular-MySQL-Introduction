@@ -1,7 +1,9 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.Book;
+import com.example.demo.Entity.BookShop;
 import com.example.demo.Repository.BookRepository;
+import com.example.demo.Repository.BookShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private BookShopRepository bookShopRepository;
 
     public ResponseEntity<Book> addBook(Book book)
     {
@@ -56,4 +61,6 @@ public class BookService {
         bookRepository.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }
