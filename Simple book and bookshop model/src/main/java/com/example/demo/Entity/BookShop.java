@@ -1,20 +1,22 @@
 package com.example.demo.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
+@Data
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "bookshopsagain")
+@Table(name = "bookshop")
 public class BookShop implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,7 @@ public class BookShop implements Serializable {
     private String location;
     private String email;
     private String contact_no;
-    @OneToMany(mappedBy = "bookShop")
+    @JsonIgnore
+    @OneToMany(mappedBy = "bookshop")
     private Set<Book> books=new HashSet<>();
 }

@@ -1,12 +1,14 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-
+@Data
 @Entity
 @Getter
 @Setter
@@ -18,9 +20,9 @@ public class Book implements Serializable {
 
     private Long book_id;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name= "shopId",referencedColumnName = "shop_no")
-    private BookShop bookShop;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "bookshopNum")
+    private BookShop bookshop;
 
     private String title;
     private Double price;
